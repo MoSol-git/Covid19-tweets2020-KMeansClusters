@@ -87,11 +87,12 @@ top20 = noun_count.loc[:19]['Nouns'].to_list()
 # Below is the new lines
 
 # Change twtsample value for smaller or bigger sample.
-# 10 categories should be enough. Chnage n_clusters for different no. of categories. Set verbosity to 1 if needed.
+# 10 categories should be enough. Change n_clusters for different no. of categories. Set verbosity to 1 if needed.
 
 twtsample= 1000
 categories=10
 verbosity=0
+
 noun_vectors = []
 twt_sel = random.choices(twtchunks2, k=twtsample)
 for i in twt_sel:
@@ -101,14 +102,15 @@ km = KMeans(n_clusters=categories, init='k-means++', verbose=verbosity)
 labels = km.fit_predict(noun_vectors)
 
 
-def tweetClassififcation(selection=0):
+def tweet_classification(selection=0):
     """ Returns the list and the no. of tweets associated with each label."""
 
-    # Gather the number of tweets for each label
+    # Shows the number of tweets of each label.
     label_length = []
     for i in np.unique(labels):
         label_length.append([i, len(np.array(twt_sel, dtype=object)[labels == i])])
-    # Read the tweets of each selection
+    
+    # Gets the tweets of each selection.
     collection = []
     for i in np.array(twt_sel, dtype=object)[labels == selection][:, 0]:
         collection.append(i[3])
